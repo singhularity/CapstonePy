@@ -4,8 +4,7 @@ from optparse import OptionParser
 import InstructionParser
 import ConfigConstants
 
-class GetetConfigs:
-         
+class GetSetConfigs:         
     def getNodeList(self):
         args = ["list"]
         usage = "usage: %prog [options] command [arguments]\nCommand is one of: " \
@@ -38,7 +37,9 @@ class GetetConfigs:
             return self.getNodeList().count()
         
     def setNodeDetails(self):
-        self.nodes = InstructionParser.getNodeDetails(ConfigConstants.__RESOURCE_DIR + "\\" + ConfigConstants.__CONFIG_FILE) 
+        instructionParser = InstructionParser()
+        configConstants = ConfigConstants()
+        self.nodes = instructionParser.getNodeDetails(configConstants.__RESOURCE_DIR + "\\" + configConstants.__CONFIG_FILE) 
     
     def getNumberOfConfigNodes(self):
             if self.nodes == None:
@@ -73,11 +74,13 @@ class GetetConfigs:
         return maxData
     
     def setServerSpecs(self):
-        self.serverSpecs = InstructionParser.getServerDetails(ConfigConstants.__RESOURCE_DIR + "\\" + ConfigConstants.__CONFIG_FILE)
+        configConstants = ConfigConstants()
+        self.serverSpecs = InstructionParser.getServerDetails(configConstants.__RESOURCE_DIR + "\\" + configConstants.__CONFIG_FILE)
         
     def writeConfig(self,configlist):
         try:
-            configFile = open(ConfigConstants.__RESOURCE_DIR + "\\" + ConfigConstants.__CONFIG_FILE, 'w')
+            configConstants = ConfigConstants()
+            configFile = open(configConstants.__RESOURCE_DIR + "\\" + configConstants.__CONFIG_FILE, 'w')
             for paramName, value in configlist:
                 configFile.writeline(paramName + "\n" + value)
             configFile.close()

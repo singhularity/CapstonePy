@@ -16,7 +16,8 @@ def readServerContents(self,serverContentFile):
     return serverContent
 
 def getInstructionSet(self):
-    nodeList = GetSetConfigs.getNodeList()
+    getConfigs = GetSetConfigs()
+    nodeList = getConfigs.getNodeList()
     instructionSet = []
     for node in nodeList:
         instructionSet.append(node)
@@ -36,9 +37,10 @@ def getInstructionFromFile(file):
 def getNodeDetails(file):
     try:
         nodeContent = open(file, 'r')
-        if nodeContent.readline() == ConfigConstants.__NODES:
+        configConstants = ConfigConstants()
+        if nodeContent.readline() == configConstants.__NODES:
             numNodes = int(nodeContent.readline())
-            if nodeContent.readline() == ConfigConstants.__NODE_RAM_CAPACITY:          
+            if nodeContent.readline() == configConstants.__NODE_RAM_CAPACITY:          
                 ramCapacity = int(nodeContent.readine())
         return numNodes, ramCapacity
     except:
@@ -46,10 +48,11 @@ def getNodeDetails(file):
         
 def getServerDetails(file):
     try:
+        configConstants = ConfigConstants()
         instructionReader =open(file,'r')
-        if instructionReader.readline() == ConfigConstants.__SERVER_RAM_CAPCITY:
+        if instructionReader.readline() == configConstants.__SERVER_RAM_CAPCITY:
             serverRamCapacity = int(instructionReader.readline())
-            if instructionReader.readline() == ConfigConstants.__MAX_DATA:
+            if instructionReader.readline() == configConstants.__MAX_DATA:
                 maxData = instructionReader.readline()
         return serverRamCapacity, maxData
     except:
@@ -59,17 +62,18 @@ def getDelayStats(file):
     statFile = open(file, 'r')
     delayList = []
     try:
-        if statFile.readline() == ConfigConstants.__DISK_DELAY_TOKEN:
+        configConstants = ConfigConstants()
+        if statFile.readline() == configConstants.__DISK_DELAY_TOKEN:
             delayList.apend(int(statFile.readline()))            
-        if statFile.readline() == ConfigConstants.__CLIENT_DELAY_TOKEN:
+        if statFile.readline() == configConstants.__CLIENT_DELAY_TOKEN:
             delayList.append(int(statFile.readline()))
-        if statFile.readline() == ConfigConstants.__MANAGER_DELAY_TOKEN:
+        if statFile.readline() == configConstants.__MANAGER_DELAY_TOKEN:
             delayList.append(int(statFile.readline()))
-        if statFile.readline() == ConfigConstants.__LOCAL_CACHE_DELAY_TOKEN:
+        if statFile.readline() == configConstants.__LOCAL_CACHE_DELAY_TOKEN:
             delayList.append(int(statFile.readLine()))
-        if statFile.readline() == ConfigConstants.__LOG_MESSAGES_TOKEN:
+        if statFile.readline() == configConstants.__LOG_MESSAGES_TOKEN:
             delayList.append(int(statFile.readline()))
-        if statFile.readline() == ConfigConstants.__ADD_DELAY_TOKEN:
+        if statFile.readline() == configConstants.__ADD_DELAY_TOKEN:
             delayList.append(int(statFile.readline()))
         return delayList
     except:
