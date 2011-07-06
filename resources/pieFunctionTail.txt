@@ -1,0 +1,3 @@
+var chart = new google.visualization.PieChart(document.getElementById('pie_chart_div'));
+        chart.draw(data, {width: 800, height: 500, title: 'Chart Representing Various Cache Hits!'});
+      }

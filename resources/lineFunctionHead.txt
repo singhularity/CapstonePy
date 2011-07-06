@@ -1,0 +1,2 @@
+function drawLineChart() {
+        var data = new google.visualization.DataTable();
