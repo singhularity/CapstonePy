@@ -1,7 +1,7 @@
 import os
 import InstructionParser
 
-class InstructionParser:
+class ConfigConstants:
     def __init__(self):   
         self.__NODES = "Nodes"
         self.__NODE_RAM_CAPACITY = "RamCap"
@@ -25,8 +25,8 @@ class InstructionParser:
         self.__CONFIG_FILE = "configFile.txt"
         self.__READ_INSTRUCTION = 0 #token for a "READ" from the server
         self.__DISK_CAPACITY = 5000 #Max disk capacity for server
-        instructionparser = InstructionParser()
-        self.__DELAY_STATS = instructionparser.getDelayStats(self.__RESOURCE_DIR + r"/" + self.__CONFIG_FILE)
+        instructionparser = InstructionParser        
+        self.__DELAY_STATS = instructionparser.getDelayStats(self.__RESOURCE_DIR + "\\" + self.__CONFIG_FILE)
         self.__DISK_DELAY = self.__DELAY_STATS.get(0)
         self.__CLIENT_DELAY = self.__DELAY_STATS.get(1)
         self.__MANAGER_DELAY = self.__DELAY_STATS.get(2)

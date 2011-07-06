@@ -4,7 +4,9 @@ from optparse import OptionParser
 import InstructionParser
 import ConfigConstants
 
-class GetSetConfigs:         
+class GetSetConfigs(object):
+    def __init__(self):
+        self.nodes = None         
     def getNodeList(self):
         args = ["list"]
         usage = "usage: %prog [options] command [arguments]\nCommand is one of: " \
@@ -37,10 +39,10 @@ class GetSetConfigs:
             return self.getNodeList().count()
         
     def setNodeDetails(self):
-        instructionParser = InstructionParser()
-        configConstants = ConfigConstants()
-        self.nodes = instructionParser.getNodeDetails(configConstants.__RESOURCE_DIR + "\\" + configConstants.__CONFIG_FILE) 
-    
+        instructionParser = InstructionParser
+        configConstants = ConfigConstants.ConfigConstants()
+        self.nodes = instructionParser.getNodeDetails(configConstants.__RESOURCE_DIR + "\\" + configConstants.__CONFIG_FILE)
+       
     def getNumberOfConfigNodes(self):
             if self.nodes == None:
                 numNodes, capacity  = self.setNodeDetails()                

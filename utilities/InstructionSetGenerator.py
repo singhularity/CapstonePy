@@ -3,11 +3,9 @@ from utilities import GetSetConfigs
 import random
 
 class InstructionSetGenerator:
-    def generateNodeInstructionSetFiles(self):
-        print "helo"
-        inst = GetSetConfigs.GetSetConfigs
-        configs = GetSetConfigs.GetSetConfigs
-        self.numberOfNodes = configs.getNumberOfConfigNodes(configs)
+    def generateNodeInstructionSetFiles(self):              
+        configs = GetSetConfigs.GetSetConfigs()
+        self.numberOfNodes = configs.getNumberOfConfigNodes()
         self.maxDataRange = GetSetConfigs().getMaxData()
         self.minDataRange = 1
         
@@ -33,7 +31,7 @@ class InstructionSetGenerator:
             data.append(random.randint(self.maxDataRange - self.minDataRange + 1))
         
         for j in range(0, dataSize):
-            dataBiased.append("0 " + nodeNum + " " + data[random.randint(int(dataSize * 0.5)) + "\n"] )
+            dataBiased.append("0 " + nodeNum + " " + data[random.randint(int(dataSize * 0.5)) + "\n"])
         return dataBiased
     
     def __generateServerContents(self):
@@ -50,5 +48,5 @@ def main():
     instructionSetGenerator = InstructionSetGenerator()
     instructionSetGenerator.generateNodeInstructionSetFiles()
         
-if __name__=="__main__":
+if __name__ == "__main__":
     main()        

@@ -2,7 +2,7 @@ import Instruction
 import GetSetConfigs
 from components import Contents
 import ConfigConstants
-
+import os
 
 def readServerContents(self,serverContentFile):
     serverContent = []
@@ -59,11 +59,11 @@ def getServerDetails(file):
         print "Cannot open config file :: ", file
         
 def getDelayStats(file):
-    statFile = open(file, 'r')
-    delayList = []
+    statFile = open(file.replace('\\','\\\\'), 'r')
+    delayList = []       
     try:
-        configConstants = ConfigConstants()
-        if statFile.readline() == configConstants.__DISK_DELAY_TOKEN:
+        configConstants = ConfigConstants.ConfigConstants()       
+        if statFile.readline() == configConstants.__DISK_DELAY_TOKEN:                        
             delayList.apend(int(statFile.readline()))            
         if statFile.readline() == configConstants.__CLIENT_DELAY_TOKEN:
             delayList.append(int(statFile.readline()))
@@ -76,8 +76,11 @@ def getDelayStats(file):
         if statFile.readline() == configConstants.__ADD_DELAY_TOKEN:
             delayList.append(int(statFile.readline()))
         return delayList
-    except:
-        print "Cannot open configfile :: ", file
+    except Exception as excpt:
+        print excpt
+        print file.replace('\\','\\\\')
+        print "Cannot open configfile :: ", file      
+                
         
     
         
