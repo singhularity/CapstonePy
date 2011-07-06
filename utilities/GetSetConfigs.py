@@ -2,11 +2,14 @@ import Pyro4
 from Pyro4 import  naming 
 from optparse import OptionParser
 import InstructionParser
-import ConfigConstants
+from ConfigConstants import *
 
 class GetSetConfigs(object):
     def __init__(self):
-        self.nodes = None         
+        self.capacity = None
+        self.numNodes = None
+        self.serverRam = None
+        self.maxData = None         
     def getNodeList(self):
         args = ["list"]
         usage = "usage: %prog [options] command [arguments]\nCommand is one of: " \
@@ -39,50 +42,39 @@ class GetSetConfigs(object):
             return self.getNodeList().count()
         
     def setNodeDetails(self):
-        instructionParser = InstructionParser
-        configConstants = ConfigConstants.ConfigConstants()
-        self.nodes = instructionParser.getNodeDetails(configConstants.__RESOURCE_DIR + "\\" + configConstants.__CONFIG_FILE)
+        instructionParser = InstructionParser        
+        self.numNodes, self.capacity = instructionParser.getNodeDetails(RESOURCE_DIR + "\\" + CONFIG_FILE)
        
     def getNumberOfConfigNodes(self):
-            if self.nodes == None:
-                numNodes, capacity  = self.setNodeDetails()                
-            else:
-                numNodes , capacity = self.nodes
-            return numNodes
+        if self.numNodes == None:
+            self.setNodeDetails()    
+        return self.numNodes
     
     def getRamCapacity(self):
-        if self.nodes == None:
-            numNodes, capacity = self.setNodeDetails()
-        else:
-            numNodes, capacity = self.nodes
-        return capacity
+        if self.capacity == None:
+            self.setNodeDetails()        
+        return self.capacity
     
         
     def getInstructionSet(self):
         return InstructionParser.getInstructionSet()
     
     def getServerRam(self):
-        if self.serverSpecs == None:
-            serverRam, maxData = self.serverSpecs
-        else:
-            serverRam, maxData = self.serverSpecs
-        return serverRam
+        if self.serverRam == None:
+            self.setServerSpecs()
+        return self.serverRam
     
     def getMaxData(self):
-        if self.serverSpecs == None:
-            serverRam, maxData = self.setServerSpecs()
-        else:
-            serverRam, maxData = self.serverSpecs
-        return maxData
+        if self.maxData == None:
+            self.setServerSpecs()        
+        return self.maxData
     
-    def setServerSpecs(self):
-        configConstants = ConfigConstants()
-        self.serverSpecs = InstructionParser.getServerDetails(configConstants.__RESOURCE_DIR + "\\" + configConstants.__CONFIG_FILE)
+    def setServerSpecs(self):        
+        self.serverRam, self.maxData = InstructionParser.getServerDetails(RESOURCE_DIR + "\\" + CONFIG_FILE)
         
     def writeConfig(self,configlist):
-        try:
-            configConstants = ConfigConstants()
-            configFile = open(configConstants.__RESOURCE_DIR + "\\" + configConstants.__CONFIG_FILE, 'w')
+        try:            
+            configFile = open(RESOURCE_DIR + "\\" + CONFIG_FILE, 'w')
             for paramName, value in configlist:
                 configFile.writeline(paramName + "\n" + value)
             configFile.close()
