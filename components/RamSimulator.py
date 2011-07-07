@@ -5,7 +5,7 @@ class RamSimulator:
         self.ramContents = []
 
     def pushContent(self, content):
-        if not self.ramContents.__contains__(content) and (self.currentCapacity - 1) >= 0:
+        if not content in self.ramContents and (self.currentCapacity - 1) >= 0:
             self.ramContents.append(content)
             self.currentCapacity -= 1
             return True
@@ -24,12 +24,12 @@ class RamSimulator:
         return mincont
     
     def removeContent(self, content):
-        if self.ramContents__contains(content):
+        if content in self.ramContents:
             self.removeContent(content)
             self.currentCapacity -= 1
     
     def getContent(self, content):
-        if self.ramContents__contains(content):
+        if content in self.ramContents:
             content.accessContent()
             return True
         return False

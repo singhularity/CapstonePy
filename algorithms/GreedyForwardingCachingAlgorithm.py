@@ -1,6 +1,7 @@
 from components import NetworkConfigurator
 from components import ServerNode
 from utilities import GetSetConfigs
+import ClientNode
 class GreedyForwardingCachingAlgorithm:
     def __init__(self,nodeRam, serverNode):
         self.nodeRam = nodeRam        
@@ -10,34 +11,38 @@ class GreedyForwardingCachingAlgorithm:
         self.createNodes()
     
     def createNodes(self):
-        for newNode in GetSetConfigs.GetSetConfigs.getNodeList():
+        for newNode in GetSetConfigs.GetSetConfigs().getNodeList():
             self.configurator.observe(newNode)
-            self.nodeList.append(newNode)
+            self.nodeList.append(newNode);
     
     def addContent(self, nodeNum, content):
+        
         for contents in content:
             if isinstance(self.nodeList[nodeNum], ServerNode.ServerNode):
                 self.nodeList[nodeNum].pushContent(contents)
             else:
-                    self.nodeList[nodeNum].pushContent(contents,self.configurator)
+                    receivednode = self.nodeList[nodeNum]
+                    receivednode.__class__ = ClientNode.ClientNode
+                    receivednode.pushContent(contents,self.configurator)
     def readContent(self, clientNodeNum, content):
         clientNode = self.nodeList[clientNodeNum]
+        clientNode.__class__ = ClientNode.ClientNode        
         contentNode = self.getNeighbor(content)
         
-        if clientNode.getContent(content):
+        if  clientNode.getContent(content):
             clientNode.incrementLocalCacheHitCount()
             print "Local cache hit"
         elif contentNode != None:
             clientNode.incrementeighbourCacheHitCount()
             print "Content " + content + "fetched from peer " + contentNode + " :: " + clientNode             
         elif self.serverNode.getContent(content):
-            clientNode.incrementDikAccessCount()
+            clientNode.incrementDiskAccessCount()
             self.addContent(clientNodeNum, content)
         else:
             print "Not found!"
         
     def getNeighbor(self,content):
-        return self.configurator.getNodeWIthContent(content)
+        return self.configurator.getNodeWithContent(content)
     
     def getServerNode(self):
         return self.serverNode

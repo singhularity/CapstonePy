@@ -3,7 +3,7 @@ from utilities import InstructionParser
 import Pyro4
 import RamTableEntry
 
-class Node(Observable):
+class Node(Observable, object):
     def __init__(self, host, port, myRam, nodeName, instructionFile):
         Observable.__init__(self)
         self.myRam = myRam
@@ -13,10 +13,12 @@ class Node(Observable):
         self.neighbourCacheHitCount = 0
         self.diskAccessCount = 0
         self.localCacheHitCount = 0
+        self.instructionSheet = []
         
         if instructionFile:
             self.instructionSheet = InstructionParser.getInstructionFromFile(instructionFile)
         try:
+            Pyro4.config.DOTTEDNAMES = "true"
             daemon = Pyro4.Daemon()
             ns=Pyro4.locateNS()
             uri = daemon.register(self)
@@ -48,6 +50,9 @@ class Node(Observable):
         
     def incrementNeighbourCacheHitCount(self):
         self.neighbourCacheHitCount += 1
+    
+    def getInstructionSheet(self):
+        return InstructionParser.getInstructionFromFile(r"C:\GITProjects\CapstonePy\resources\node1.txt")
         
     def __str__(self):
         return self.nodeName + " :: Client :: "

@@ -2,13 +2,14 @@ import Launcher
 from algorithms import GreedyForwardingCachingAlgorithm
 
 class GreedyForwardingLauncher:
-    CLASSNAME = "GreedyForwarding"
+    
     
     def configureAndLaunch(self,host, port):
+        self.CLASSNAME = "GreedyForwarding"
         launcher = Launcher.Launcher()
         launcher.setParams(host, port)
         algorithm = GreedyForwardingCachingAlgorithm.GreedyForwardingCachingAlgorithm(launcher.nodeRamCapacity, launcher.server)
-        launcher.launch(algorithm, launcher.CLASSNAME)
+        launcher.launch(algorithm, self.CLASSNAME)
     
 def main(args):
     GreedyForwardingLauncher().configureAndLaunch(args[0], args[1])

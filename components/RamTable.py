@@ -1,5 +1,5 @@
 class RamTable:
-    def __init__(self, allContent, newContentList):
+    def __init__(self):
         self.allContent = {}
         self.nodeContentList = ()
     

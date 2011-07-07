@@ -12,7 +12,7 @@ class InstructionSetGenerator:
         self.__generateServerContents()
         
         try:            
-            for i in range (0, self.numberOfNodes):
+            for i in range (self.numberOfNodes):
                 writer = open(RESOURCE_DIR.replace('\\', '/') + "/" + "node" + str(i + 1) + ".txt", "w")
                 instructions = self.__getRandomInstructions(i + 1)
                 for instr in instructions:
@@ -27,10 +27,10 @@ class InstructionSetGenerator:
         data = []
         dataBiased = []
         
-        for i in range(0, int(dataSize)):
+        for i in range(int(dataSize)):
             data.append(randint(1,(self.maxDataRange - self.minDataRange + 1)))
         
-        for j in range(0, int(dataSize)):
+        for j in range(int(dataSize)):
             dataBiased.append("0 " + str(nodeNum) + " " + str(data[randint(1,int(dataSize * 0.5))]) + "\n")
         return dataBiased
     

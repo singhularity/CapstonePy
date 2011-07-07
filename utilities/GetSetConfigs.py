@@ -4,6 +4,7 @@ from optparse import OptionParser
 #from components import ServerNode
 import InstructionParser
 from ConfigConstants import *
+import re
 
 class GetSetConfigs(object):
     def __init__(self):
@@ -11,7 +12,7 @@ class GetSetConfigs(object):
         self.numNodes = None
         self.serverRam = None
         self.maxData = None
-        self.nodeList = None         
+        self.nodeList = []         
     def getNodeList(self):
         args = ["list"]
         usage = "usage: %prog [options] command [arguments]\nCommand is one of: " \
@@ -29,13 +30,15 @@ class GetSetConfigs(object):
             resultdict =  nameserver.list()
         else:
             resultdict = nameserver.list(prefix=args[1]), "- prefix '%s'" % args[1]
-        list = []
+        
         for name, uri in sorted(resultdict.items()):
-            obj = Pyro4.Proxy(uri)
-            if not isinstance(obj,Pyro4.naming.NameServer):# and not isinstance(obj,ServerNode.ServerNode):
-                list.append(obj)
-        self.nodeList = list
-        return list
+            Pyro4.config.DOTTEDNAMES = "true"            
+            obj = Pyro4.core.Proxy(uri)
+            obj.__pyroAttributes = True            
+            #if not isinstance(obj,Pyro4.naming.NameServer):# and not isinstance(obj,ServerNode.ServerNode):
+            if re.search('\ANode',name):# and not isinstance(obj,ServerNode.ServerNode):                
+                self.nodeList.append(obj)        
+        return self.nodeList
     
     def getNumberofNodes(self):
         if self.nodeList != None:

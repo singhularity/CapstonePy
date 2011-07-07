@@ -9,9 +9,9 @@ class NetworkConfigurator(Observer):
         for node in nodeList:
             if isinstance(node, ServerNode):
                 self.serverNode = node
-        self.globalTable = RamTable()
+        self.globalTable = RamTable.RamTable()
         
-    def getNodeWIthContent(self,content):
+    def getNodeWithContent(self,content):
         #TODO Add Delay
         return self.globalTable.getNodeWithContent(content)
     

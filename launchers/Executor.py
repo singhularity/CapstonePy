@@ -6,7 +6,7 @@ class Executor(Thread):
         self.numberOfNodes = numberOfNodes
         self.algorithm = algorithm
         self.instructionSet = None
-        self.times = None
+        self.times = []
         
     def setInstructionSet(self, instructionSet):
         self.instructionSet = instructionSet
@@ -17,6 +17,7 @@ class Executor(Thread):
     def run(self):
         for nextInst in self.instructionSet:
             startTime = time.clock()
-            self.algorithm.readContent(nextInst.nodeNum - 1, nextInst.content) 
+            self.algorithm.readContent(int(nextInst.nodeNum) - 1, nextInst.content) 
             endTime = time.clock() - startTime
             self.times.append(endTime)
+        print self.times

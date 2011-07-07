@@ -3,7 +3,7 @@ import utilities.GetSetConfigs
 from utilities.ConfigConstants import *
 
 import components.RamSimulator
-class ServerNode(Node.Node):
+class ServerNode(Node.Node,object):
     def __init__(self, host, port, myRam, nodeName):
         Node.Node(host, port, myRam, nodeName, None)
     

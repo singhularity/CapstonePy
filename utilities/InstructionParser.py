@@ -3,7 +3,7 @@ import GetSetConfigs
 from components import Contents
 from ConfigConstants import *
 
-def readServerContents(self,serverContentFile):
+def readServerContents(serverContentFile):
     serverContent = []
     try:
         contentReader = open(serverContentFile,'r')
@@ -16,10 +16,12 @@ def readServerContents(self,serverContentFile):
 
 def getInstructionSet(self):
     getConfigs = GetSetConfigs.GetSetConfigs()
-    nodeList = getConfigs.getNodeList()
+    nodeList = getConfigs.getNodeList()    
     instructionSet = []
     for node in nodeList:
-        instructionSet.append(node)
+        from components import Node
+        node.__class__ = Node.Node               
+        instructionSet.append(node.getInstructionSheet())
     return instructionSet
         
 def getInstructionFromFile(file):
