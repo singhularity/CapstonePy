@@ -1,7 +1,7 @@
 class RamSimulator:
-    def __init__(self, maxCapacity, currentCapacity):
+    def __init__(self, maxCapacity):
         self.maxCapacity = maxCapacity
-        self.currentCapacity = currentCapacity
+        self.currentCapacity = maxCapacity
         self.ramContents = []
 
     def pushContent(self, content):

@@ -15,23 +15,28 @@ def readServerContents(self,serverContentFile):
     return serverContent
 
 def getInstructionSet(self):
-    getConfigs = GetSetConfigs()
+    getConfigs = GetSetConfigs.GetSetConfigs()
     nodeList = getConfigs.getNodeList()
     instructionSet = []
     for node in nodeList:
         instructionSet.append(node)
+    return instructionSet
         
 def getInstructionFromFile(file):
     try:
-        nodeFile = open(file, 'r')
-        instructions = []        
-        for inslist in (nodeFile.readline().replace('\n','').split(" ")):
-            instructions.append(Instruction(inslist[0], inslist[1], Contents(inslist[2])))
+        nodeFile = open(file.replace('\n',''), 'r')
+        instructions = []
+        line = nodeFile.readline().replace('\n','')
+        while line:
+            inslisttokens = line.split(" ")         
+            instructions.append(Instruction.Instruction(inslisttokens[0], inslisttokens[1], Contents.Contents(inslisttokens[2])))
+            line = nodeFile.readline().replace('\n','')
         return instructions
-    except:
+    except Exception as expt:
+        print expt
         print "Cannot open instruction file :: " , file
     finally:
-        file.close()
+        nodeFile.close()
         
 def getNodeDetails(file):
     try:

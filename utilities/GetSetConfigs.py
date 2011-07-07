@@ -1,6 +1,7 @@
 import Pyro4
 from Pyro4 import  naming 
 from optparse import OptionParser
+#from components import ServerNode
 import InstructionParser
 from ConfigConstants import *
 
@@ -9,7 +10,8 @@ class GetSetConfigs(object):
         self.capacity = None
         self.numNodes = None
         self.serverRam = None
-        self.maxData = None         
+        self.maxData = None
+        self.nodeList = None         
     def getNodeList(self):
         args = ["list"]
         usage = "usage: %prog [options] command [arguments]\nCommand is one of: " \
@@ -30,16 +32,16 @@ class GetSetConfigs(object):
         list = []
         for name, uri in sorted(resultdict.items()):
             obj = Pyro4.Proxy(uri)
-            if not isinstance(obj,Pyro4.naming.NameServer):
+            if not isinstance(obj,Pyro4.naming.NameServer):# and not isinstance(obj,ServerNode.ServerNode):
                 list.append(obj)
         self.nodeList = list
         return list
     
     def getNumberofNodes(self):
         if self.nodeList != None:
-            return self.nodeList.count()
+            return self.nodeList.__len__()
         else:
-            return self.getNodeList().count()
+            return self.getNodeList().__len__()
         
     def setNodeDetails(self):
         instructionParser = InstructionParser        
@@ -57,7 +59,7 @@ class GetSetConfigs(object):
     
         
     def getInstructionSet(self):
-        return InstructionParser.getInstructionSet()
+        return InstructionParser.getInstructionSet(self)
     
     def getServerRam(self):
         if self.serverRam == None:
