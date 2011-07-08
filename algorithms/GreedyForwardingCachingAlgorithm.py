@@ -17,11 +17,14 @@ class GreedyForwardingCachingAlgorithm:
     
     def addContent(self, nodeNum, content):        
         #for contents in content:
-        if isinstance(self.nodeList[nodeNum], ServerNode.ServerNode):
-            self.nodeList[nodeNum].pushContent(content)
-        else:            
-            receivednode = self.nodeList[nodeNum]                                         
-            receivednode.pushContent(content,self.configurator)
+        try:
+            if isinstance(self.nodeList[nodeNum], ServerNode.ServerNode):
+                self.nodeList[nodeNum].pushContent(content)
+            else:            
+                receivednode = self.nodeList[nodeNum]                                                    
+                receivednode.pushContent(content,self.configurator)
+        except:
+            print "Error :: " + str(receivednode.getNodeName())
                 
     def readContent(self, clientNodeNum, content):
         clientNode = self.nodeList[clientNodeNum]           

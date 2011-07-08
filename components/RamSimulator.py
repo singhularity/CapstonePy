@@ -14,7 +14,7 @@ class RamSimulator:
             #self.LRU()
             #self.pushContent(content)
             #return True           
-        return False
+        
     
     def LRU(self):
         mincont = None

@@ -41,9 +41,9 @@ class Node(Observable, object):
             self.myRam.pushContent(content)
         return True      
     
-    def getContent(self, content):        
-        if self.myRam.getContent(content):
-            print "git it"
+    def getContent(self, content):
+        print self.myRam.getContent(content)        
+        if self.myRam.getContent(content):            
             self.broadcastEvent("GetContent", RamTableEntry(self, content))
             return True
         return False           
@@ -59,6 +59,9 @@ class Node(Observable, object):
     
     def getInstructionSheet(self):
         return InstructionParser.getInstructionFromFile(r"C:\GITProjects\CapstonePy\resources\node1.txt")
+    
+    def getNodeName(self):
+        return self.nodeName
         
     def __str__(self):
         return self.nodeName + " :: Client :: "

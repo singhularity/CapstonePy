@@ -18,7 +18,7 @@ class ServerNode(Node.Node,object):
             #Add Delay
             if content in self.contents:
                 print "Content " + str(content.content) + " fetched from the disk!"
-                super(ServerNode,self).getMyRam().pushContent(content)
+                super(ServerNode,self).pushContent(content)
                 self.diskAccess += 1                
         else:
             print "Content " + str(content.content) + " fetched from server cache!"

@@ -8,13 +8,13 @@ class ClientNode(Node.Node):
         Node.Node.__init__(self, host, port, myRam, nodeName, instructionFile)
        
     def pushContent(self,content, configurator):
-        insertedFlag = super(ClientNode,self).getMyRam().pushContent(content)        
+        insertedFlag = super(ClientNode,self).pushContent(content)        
         if insertedFlag:
             self.broadcastEvent("Push Content",RamTableEntry.RamTableEntry(self, content))
         else:                        
-            removed = super(ClientNode,self).getMyRam().LRU()
-            super(ClientNode,self).getMyRam().pushContent(content)
-            self.broadcastEvent("Push removed Content",RamTableEntry.RamTableEntry(self, removed))
+            removed = super(ClientNode,self).LRU()
+            super(ClientNode,self).pushContent(content)
+            self.broadcastEvent("Push removed Content",RamTableEntry.RamTableEntry(self, removed))    
 
 def main(args):
     ram = RamSimulator.RamSimulator(int(args[3]))

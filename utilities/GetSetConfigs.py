@@ -37,8 +37,9 @@ class GetSetConfigs(object):
             obj = Pyro4.core.Proxy(uri)
             obj.__pyroAttributes = True            
             #if not isinstance(obj,Pyro4.naming.NameServer):# and not isinstance(obj,ServerNode.ServerNode):
-            if re.search('\ANode',name):# and not isinstance(obj,ServerNode.ServerNode):                
-                self.nodeList.append(obj)        
+            if re.search('\ANode',name):# and not isinstance(obj,ServerNode.ServerNode):
+                print name                
+                self.nodeList.append(obj)                  
         return self.nodeList
     
     def getNumberofNodes(self):
