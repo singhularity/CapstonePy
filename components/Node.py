@@ -36,11 +36,14 @@ class Node(Observable, object):
             self.myRam.pushContent(content)
         return True
     
+    def getStr(self):
+        print "helo"
+    
     def getContent(self, content):
         if self.myRam.getContent(content):
             self.broadcastEvent("GetContent", RamTableEntry(self, content))
             return True
-        return False
+        return False           
     
     def incrementDiskAccessCount(self):
         self.diskAccessCount += 1
@@ -52,7 +55,7 @@ class Node(Observable, object):
         self.neighbourCacheHitCount += 1
     
     def getInstructionSheet(self):
-        return InstructionParser.getInstructionFromFile(r"C:\GITProjects\CapstonePy\resources\node1.txt")
+        return InstructionParser.getInstructionFromFile(r"C:\Users\singhulariti\workspace\CapstonePy\src\resources\node1.txt")
         
     def __str__(self):
         return self.nodeName + " :: Client :: "

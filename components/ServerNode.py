@@ -1,23 +1,22 @@
 import Node
 import utilities.GetSetConfigs
 from utilities.ConfigConstants import *
+from utilities import InstructionParser
 
 import components.RamSimulator
 class ServerNode(Node.Node,object):
     def __init__(self, host, port, myRam, nodeName):
-        Node.Node(host, port, myRam, nodeName, None)
-    
-    def setDiskCapacity(self, diskCapacity):
-        self.diskCapacity = diskCapacity
-        
-    def addContent(self, contents):
-        self.contents = contents
-    
+        self.diskCapacity = None
+        self.contents = None                
+        self.diskCapacity = DISK_CAPACITY
+        self.contents = InstructionParser.readServerContents(RESOURCE_DIR.replace('\\','/') + "/" + SERVER_CONTENT_FILE)
+        Node.Node(host, port, myRam, nodeName, None)            
+   
     def getContent(self, content):
         #TODO Add Delay
-        if not super.getContent(content):
+        if not super(ServerNode,self).getContent(content):
             #Add Delay
-            if content in self.diskContent:
+            if content in self.contents:
                 super.getMyRam().pushContent(content)
                 self.diskAccess += 1
                 print "Content " + content + " fetched from the disk!"
@@ -28,12 +27,12 @@ class ServerNode(Node.Node,object):
         return True
     
     def __str__(self):
-        return super.getNodeName() + " :: Server "
+        return super.getNodeName() + " :: Server "   
     
 def main(args):
     configs = utilities.GetSetConfigs.GetSetConfigs()
     ramCapacity = configs.getServerRam()    
-    ServerNode(args[0], args[1], components.RamSimulator.RamSimulator((ramCapacity)), SERVER_NAME)
+    ServerNode(args[0], args[1], components.RamSimulator.RamSimulator((ramCapacity)), SERVER_NAME)  
     
 if __name__ == "__main__":
     main(["localhost", "9090"])    

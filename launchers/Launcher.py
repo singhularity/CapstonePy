@@ -12,13 +12,15 @@ class Launcher:
         self.instructionSet = configs.getInstructionSet()
         self.nodeRamCapacity = configs.getRamCapacity()
         self.numberOfNodes = configs.getNumberofNodes()
-        self.server = None        
+        self.server = None
+        Pyro4.config.DOTTEDNAMES = "true"        
         self.server = Pyro4.core.Proxy("PYRONAME:Server")
         self.server.__pyroAttributes = True
-        from components import ServerNode
-        self.server.__class__ = ServerNode.ServerNode
-        self.server.setDiskCapacity(DISK_CAPACITY)
-        self.server.addContent(InstructionParser.readServerContents(RESOURCE_DIR.replace('\\','/') + "/" + SERVER_CONTENT_FILE))
+        #print self.server
+        #from components import ServerNode
+        #self.server.__class__ = ServerNode.ServerNode
+        #self.server.setDiskCapacity(DISK_CAPACITY)
+        #self.server.addContent(InstructionParser.readServerContents(RESOURCE_DIR.replace('\\','/') + "/" + SERVER_CONTENT_FILE))        
         
     def launch(self, algorithm, className):
         for i in range(self.instructionSet.__len__()):

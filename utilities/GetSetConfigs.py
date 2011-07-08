@@ -24,6 +24,7 @@ class GetSetConfigs(object):
                               help="port of the NS (or bc-port if host isn't specified)")
         parser.add_option("-v", "--verbose", action="store_true", dest="verbose", help="verbose output")
         options, args = parser.parse_args(args)
+        Pyro4.config.DOTTEDNAMES = "true"
         nameserver=naming.locateNS(options.host, options.port)
         
         if len(args)==1:

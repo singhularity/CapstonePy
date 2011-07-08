@@ -7,7 +7,7 @@ class GreedyForwardingLauncher:
     def configureAndLaunch(self,host, port):
         self.CLASSNAME = "GreedyForwarding"
         launcher = Launcher.Launcher()
-        launcher.setParams(host, port)
+        launcher.setParams(host, port)        
         algorithm = GreedyForwardingCachingAlgorithm.GreedyForwardingCachingAlgorithm(launcher.nodeRamCapacity, launcher.server)
         launcher.launch(algorithm, self.CLASSNAME)
     
