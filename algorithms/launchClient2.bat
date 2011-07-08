@@ -1,0 +1,1 @@
+python ClientNode.py localhost 9090 10 Node2 "C:/GITProjects/CapstonePy/resources/node2.txt

@@ -4,6 +4,7 @@ from utilities.ConfigConstants import *
 from Pyro4 import  naming
 from optparse import OptionParser
 from utilities import InstructionParser
+from components import RamSimulator
 import Executor
 
 class Launcher:
@@ -12,7 +13,11 @@ class Launcher:
         self.instructionSet = configs.getInstructionSet()
         self.nodeRamCapacity = configs.getRamCapacity()
         self.numberOfNodes = configs.getNumberofNodes()
-        self.server = None
+        from components import ServerNode
+        configs = GetSetConfigs.GetSetConfigs()
+        ramCapacity = configs.getServerRam()    
+        #self.server = ServerNode.ServerNode("localhost", "9090", RamSimulator.RamSimulator((ramCapacity)), SERVER_NAME)
+        
         Pyro4.config.DOTTEDNAMES = "true"        
         self.server = Pyro4.core.Proxy("PYRONAME:Server")
         self.server.__pyroAttributes = True

@@ -18,29 +18,32 @@ class Node(Observable, object):
         if instructionFile:
             self.instructionSheet = InstructionParser.getInstructionFromFile(instructionFile)
         try:
+            #if(self.nodeName != "Server"):
             Pyro4.config.DOTTEDNAMES = "true"
             daemon = Pyro4.Daemon()
             ns=Pyro4.locateNS()
             uri = daemon.register(self)
             ns.register(nodeName, uri)
             daemon.requestLoop()
-            print "available"
+            print "available"            
         except:
             print "Cannot bing node to naming Service.", nodeName
+    
+    def getMyRam(self):        
+        return self.myRam
             
     def pushContent(self, content):
+        print "Node Ram"        
         if self.myRam.pushContent(content):
             self.broadcastEvent("PushContent", self,RamTableEntry(self, content))
-        else:
+        else:            
             self.myRam.LRU()
             self.myRam.pushContent(content)
-        return True
+        return True      
     
-    def getStr(self):
-        print "helo"
-    
-    def getContent(self, content):
+    def getContent(self, content):        
         if self.myRam.getContent(content):
+            print "git it"
             self.broadcastEvent("GetContent", RamTableEntry(self, content))
             return True
         return False           
@@ -55,7 +58,7 @@ class Node(Observable, object):
         self.neighbourCacheHitCount += 1
     
     def getInstructionSheet(self):
-        return InstructionParser.getInstructionFromFile(r"C:\Users\singhulariti\workspace\CapstonePy\src\resources\node1.txt")
+        return InstructionParser.getInstructionFromFile(r"C:\GITProjects\CapstonePy\resources\node1.txt")
         
     def __str__(self):
         return self.nodeName + " :: Client :: "

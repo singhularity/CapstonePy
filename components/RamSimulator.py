@@ -4,28 +4,31 @@ class RamSimulator:
         self.currentCapacity = maxCapacity
         self.ramContents = []
 
-    def pushContent(self, content):
-        if not content in self.ramContents and (self.currentCapacity - 1) >= 0:
+    def pushContent(self, content):        
+        if not content in self.ramContents and (self.currentCapacity - 1) >= 0:            
             self.ramContents.append(content)
             self.currentCapacity -= 1
             return True
-        else:
-            self.LRU()
-            self.pushContent(content)           
+        #else:
+            #print "Lru :: here " + str(content.content)
+            #self.LRU()
+            #self.pushContent(content)
+            #return True           
         return False
     
     def LRU(self):
         mincont = None
         for cont in self.ramContents:
-            if mincont is None or (mincont.accessDate > cont.accessdate):
-                    mincont = cont        
-        self.ramContents.remove(mincont)
-        self.currentCapacity -= 1        
-        return mincont
+            if mincont is None or (mincont.accessdate > cont.accessdate):
+                mincont = cont 
+        if mincont != None:       
+            self.ramContents.remove(mincont)
+            self.currentCapacity -= 1        
+            return mincont
     
     def removeContent(self, content):
         if content in self.ramContents:
-            self.removeContent(content)
+            self.ramContents.remove(content)
             self.currentCapacity -= 1
     
     def getContent(self, content):
@@ -37,7 +40,7 @@ class RamSimulator:
     def getMinContent(self):
         mincont = None
         for cont in self.ramContents:
-            if mincont is None or (mincont.accessDate > cont.accessDate):
+            if mincont is None or (mincont.accessdate > cont.accessdate):
                 mincont = cont;
         return mincont
     

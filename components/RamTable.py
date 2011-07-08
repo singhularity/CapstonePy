@@ -26,7 +26,8 @@ class RamTable:
         if content in self.allContent:
             newval = self.allContent.get(content)
             if ((newval - 1) == 0):
-                self.alContent.remove(content)
+                if content in self.allContent:
+                    self.allContent.remove(content)
             else:
                 self.allContent[content] = (newval - 1)
                 

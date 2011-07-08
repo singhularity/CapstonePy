@@ -1,5 +1,6 @@
 from Observable import Observer
 import ServerNode
+import Node
 import RamTable
 import RamTableEntry
 import random
@@ -15,10 +16,9 @@ class NetworkConfigurator(Observer):
         #TODO Add Delay
         return self.globalTable.getNodeWithContent(content)
     
-    def processEvent(self,notifierObject,eventName,*args):
-        if isinstance(notifierObject, RamTableEntry):
-            resp = RamTableEntry(args[0])
-            self.globalTable.addTamTableEntry(resp)
+    def processEvent(self,notifierObject,eventName,*args):             
+        if isinstance(notifierObject, Node.Node):                        
+            self.globalTable.addRamTableEntry(args[0])
     
     def removeGlobalContent(self, removeEntry):
         self.globalTable.removeRamTableEntry(removeEntry)
