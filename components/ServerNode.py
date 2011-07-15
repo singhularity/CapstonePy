@@ -10,6 +10,8 @@ class ServerNode(Node.Node,object):
         self.diskCapacity = None
         self.contents = []                
         self.diskCapacity = DISK_CAPACITY
+        self.diskAccess = 0
+        self.cacheAccess = 0
         self.contents = InstructionParser.readServerContents(RESOURCE_DIR.replace('\\','/') + "/" + SERVER_CONTENT_FILE)
         Node.Node.__init__(self,host, port, myRam, nodeName, None)            
    

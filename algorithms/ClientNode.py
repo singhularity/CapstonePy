@@ -10,12 +10,12 @@ class ClientNode(Node.Node):
         Node.Node.__init__(self, host, port, myRam, nodeName, instructionFile)
                
     def pushContent(self,content, configurator):        
-        insertedFlag = Node.Node.pushContent(self,content)        
+        insertedFlag = super(ClientNode,self).pushContent(content)        
         if insertedFlag:
             self.broadcastEvent("Push Content",RamTableEntry.RamTableEntry(self, content))
         else:                        
-            removed = Node.Node.getMyRam(self).LRU()
-            Node.Node.pushContent(content)
+            removed = super(ClientNode,self).getMyRam().LRU()
+            super(ClientNode,self).pushContent(content)
             self.broadcastEvent("Push removed Content",RamTableEntry.RamTableEntry(self, removed))            
 
 def main(args):

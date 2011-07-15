@@ -53,11 +53,11 @@ class Node(Observable, object):
     def __repr__(self):
         return self.nodeName + " :: Client :: "
     
-    def __eq__(self, node):
+    def __cmp__(self, node):
         return self.nodeName == node.nodeName
     
     def __ne__(self, node):
-        return not self.__eq__(node) 
+        return not self.__cmp__(node) 
     
     
         

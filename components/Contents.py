@@ -15,7 +15,7 @@ class Contents(object):
     def __repr__(self): 
         return self.content, " :: ", self.accessdate
     
-    def __eq__(self, compcont):
+    def __cmp__(self, compcont):
         if type(compcont) == types.ListType:       
             return self.content == compcont[0]
         elif isinstance(compcont, Contents):
@@ -24,4 +24,4 @@ class Contents(object):
             return self.content == compcont
     
     def __ne__(self, compcont):        
-        return not self.__eq__(compcont)
+        return not self.__cmp__(compcont)
