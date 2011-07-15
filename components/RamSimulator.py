@@ -44,7 +44,7 @@ class RamSimulator:
                 mincont = cont;
         return mincont
     
-    def __str__(self):
+    def __repr__(self):
         return "MaxCapacity : " + self.maxCapacity + "; CurrentCapacity : " + self.currentCapacity
         
             

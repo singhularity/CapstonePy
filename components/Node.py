@@ -1,9 +1,9 @@
 from Observable import Observable
 from utilities import InstructionParser
-import Pyro4
 import RamTableEntry
 
 class Node(Observable, object):
+    """Nodes"""
     def __init__(self, host, port, myRam, nodeName, instructionFile):
         Observable.__init__(self)
         self.myRam = myRam
@@ -17,34 +17,21 @@ class Node(Observable, object):
         
         if instructionFile:
             self.instructionSheet = InstructionParser.getInstructionFromFile(instructionFile)
-        try:
-            #if(self.nodeName != "Server"):
-            Pyro4.config.DOTTEDNAMES = "true"
-            daemon = Pyro4.Daemon()
-            ns=Pyro4.locateNS()
-            uri = daemon.register(self)
-            ns.register(nodeName, uri)
-            daemon.requestLoop()
-            print "available"            
-        except:
-            print "Cannot bing node to naming Service.", nodeName
     
     def getMyRam(self):        
         return self.myRam
             
-    def pushContent(self, content):
-        print "Node Ram"        
+    def pushContent(self, content):               
         if self.myRam.pushContent(content):
-            self.broadcastEvent("PushContent", self,RamTableEntry(self, content))
+            self.broadcastEvent("PushContent", self,RamTableEntry.RamTableEntry(self, content))
         else:            
             self.myRam.LRU()
             self.myRam.pushContent(content)
         return True      
     
-    def getContent(self, content):
-        print self.myRam.getContent(content)        
+    def getContent(self, content):                
         if self.myRam.getContent(content):            
-            self.broadcastEvent("GetContent", RamTableEntry(self, content))
+            self.broadcastEvent("GetContent", RamTableEntry.RamTableEntry(self, content))
             return True
         return False           
     
@@ -63,8 +50,16 @@ class Node(Observable, object):
     def getNodeName(self):
         return self.nodeName
         
-    def __str__(self):
+    def __repr__(self):
         return self.nodeName + " :: Client :: "
+    
+    def __eq__(self, node):
+        return self.nodeName == node.nodeName
+    
+    def __ne__(self, node):
+        return not self.__eq__(node) 
+    
+    
         
     
         

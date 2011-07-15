@@ -34,11 +34,10 @@ class GetSetConfigs(object):
         
         for name, uri in sorted(resultdict.items()):
             Pyro4.config.DOTTEDNAMES = "true"            
-            obj = Pyro4.core.Proxy(uri)
+            obj = Pyro4.Proxy("PYRONAME:%s" % (name))
             obj.__pyroAttributes = True            
             #if not isinstance(obj,Pyro4.naming.NameServer):# and not isinstance(obj,ServerNode.ServerNode):
-            if re.search('\ANode',name):# and not isinstance(obj,ServerNode.ServerNode):
-                print name                
+            if re.search('\ANode',name):# and not isinstance(obj,ServerNode.ServerNode):                                               
                 self.nodeList.append(obj)                  
         return self.nodeList
     

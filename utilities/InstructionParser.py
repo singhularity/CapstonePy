@@ -30,7 +30,7 @@ def getInstructionFromFile(file):
         instructions = []
         line = nodeFile.readline().replace('\n','')
         while line:
-            inslisttokens = line.split(" ")         
+            inslisttokens = line.split(" ")                     
             instructions.append(Instruction.Instruction(inslisttokens[0], inslisttokens[1], Contents.Contents(inslisttokens[2])))
             line = nodeFile.readline().replace('\n','')
         return instructions
